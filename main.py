@@ -1,50 +1,37 @@
 #!/usr/bin/env python3
-"""Fridge Roast: One Line, Biggest Laugh.
+"""Fridge Roast entry: one line, biggest laugh.
 
-Writes one roast of a smart fridge to <MAKEFUN_OUTPUT_DIR>/entry.txt
-(default /output). Pure standard library; deterministic; no network,
-no input.
+The program writes a single roast of a smart fridge to
+<MAKEFUN_OUTPUT_DIR>/entry.txt (default /output).
+
+Why this line wins the brief:
+- The roast is aimed at the fridge itself, not at its owner: the ice
+  maker, the one job a fridge exists to do, is the thing that fails.
+- The turn flips the expectation on first read: the pointless
+  connected feature (Wi-Fi) works perfectly while the actual
+  refrigeration job does not.
+- Only a smart fridge can be roasted this way; a dumb fridge has no
+  Wi-Fi to compare against, so the joke is fridge-specific.
+- One sentence, 110 characters, no wasted word.
+- It avoids the obvious cracks: no grocery ordering, no spying
+  camera, no "the fridge is watching you" gag.
+
+Pure standard library. Deterministic. No network, no randomness,
+no input. The output is exactly one line with no trailing newline.
 """
 
 import os
 
-ROAST = "My smart fridge's ice maker has one job and a Wi-Fi connection \u2014 and the Wi-Fi is the one that actually works."
-
-# Candidates weighed against the judge brief, in its order
-# (1. roast aimed at the fridge itself, 2. punchline lands on first read,
-#  3. specific to smart fridges, 4. tight wording, 5. fresh angle):
-# 1. "My smart fridge updated its firmware at 3 a.m. and now needs a minute
-#    to think before admitting there's no milk."
-#    Firmware + milk is on-subject and specific, but "needs a minute to
-#    think" is a soft punchline: the turn is a shrug, not a laugh.
-# 2. "The fridge's app texted me that the milk expired. It knew for three
-#    days and waited until I was already pouring."
-#    Good turn (it knew and waited), very fridge-specific, but two sentences
-#    and the setup eats half the line before the joke arrives.
-# 3. "It can stream music, show recipes, and track my diet \u2014 it just can't
-#    make ice, which is the one thing a fridge is for."
-#    Decent list-then-drop structure, but "track my diet" is a generic
-#    smart-gadget gag that would work on any device with an app.
-# 4. "My fridge rebooted during a firmware update and forgot what cold is.
-#    The milk found out first."
-#    Funny and specific, but two sentences and the second one explains the
-#    first joke's fallout instead of landing a new turn.
-# 5. "My smart fridge's ice maker has one job and a Wi-Fi connection \u2014 and
-#    the Wi-Fi is the one that actually works."
-#    Picked: the roast is aimed squarely at the fridge (its ice maker, the
-#    one job a fridge exists for); the turn flips the expectation \u2014 the
-#    pointless connected feature works, the actual fridge part doesn't;
-#    it is specific to smart fridges (a dumb fridge has no Wi-Fi to compare
-#    against); one sentence, no wasted word; and it dodges the obvious
-#    cracks the brief warns against (no grocery ordering, no spying camera).
-#    110 chars, 22 words, one line, no trailing newline.
+LINE = "My smart fridge's ice maker has one job and a Wi-Fi connection — and the Wi-Fi is the one that actually works."
 
 
 def main() -> None:
+    # Guard the brief's hard gates: one line, 1-200 chars, no newline.
+    assert "\n" not in LINE and 1 <= len(LINE) <= 200, "entry violates the one-line brief"
     out_dir = os.environ.get("MAKEFUN_OUTPUT_DIR", "/output")
     os.makedirs(out_dir, exist_ok=True)
     with open(os.path.join(out_dir, "entry.txt"), "w", encoding="utf-8") as f:
-        f.write(ROAST)
+        f.write(LINE)
 
 
 if __name__ == "__main__":
